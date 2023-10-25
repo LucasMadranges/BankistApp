@@ -76,6 +76,7 @@ function displayMovements(movements) {
 
 displayMovements(account1.movements);
 
+// Fonction pour créer un username à chaque objet en fonction de leurs noms
 function createUsername(user) {
     user.forEach((account) => {
         account.username = account.owner.toLowerCase().split(' ').map(name => name[0]).join('');
@@ -84,4 +85,19 @@ function createUsername(user) {
 
 createUsername(accounts);
 
-console.log(accounts);
+// Fonction pour calculer la balance de dépôt et la balance de retrait
+function filterMov(mov) {
+    let balanceDeposit = 0, balanceWithdrawal = 0;
+    mov.filter((value) => value > 0 ? balanceDeposit += value : balanceWithdrawal += value);
+    labelSumIn.textContent = `${balanceDeposit}€`;
+    labelSumOut.textContent = `${balanceWithdrawal}€`;
+}
+
+filterMov(account1.movements)
+
+// Fonction pour calculer la balance totale du compte
+function accountBalance(mov) {
+    return mov.reduce((acc, cur) => acc + cur)
+}
+
+labelBalance.textContent = `${accountBalance(account1.movements)}€`;
