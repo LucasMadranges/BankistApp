@@ -74,4 +74,14 @@ function displayMovements(movements) {
     })
 }
 
-displayMovements(account2.movements);
+displayMovements(account1.movements);
+
+function createUsername(user) {
+    user.forEach((account) => {
+        account.username = account.owner.toLowerCase().split(' ').map(name => name[0]).join('');
+    })
+}
+
+createUsername(accounts);
+
+console.log(accounts);
