@@ -67,7 +67,7 @@ function displayMovements(movements) {
         html.innerHTML = '' +
             `<div class="movements__row">
                 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-                <div class="movements__value">${mov}</div>
+                <div class="movements__value">${mov}€</div>
             </div>`;
 
         containerMovements.insertAdjacentElement('afterbegin', html);
@@ -79,18 +79,27 @@ displayMovements(account1.movements);
 // Fonction pour créer un username à chaque objet en fonction de leurs noms
 function createUsername(user) {
     user.forEach((account) => {
-        account.username = account.owner.toLowerCase().split(' ').map(name => name[0]).join('');
+        account.username = account.owner.toLowerCase()
+                                  .split(' ')
+                                  .map(name => name[0])
+                                  .join('');
     })
 }
 
 createUsername(accounts);
 
 // Fonction pour calculer la balance de dépôt et la balance de retrait
-function filterMov(mov) {
-    let balanceDeposit = 0, balanceWithdrawal = 0;
-    mov.filter((value) => value > 0 ? balanceDeposit += value : balanceWithdrawal += value);
+function filterMov(movements) {
+    let balanceDeposit = movements.filter(mov => mov > 0)
+                                  .reduce((current, mov) => current + mov);
+    let balanceWithdrawal = movements.filter(mov => mov < 0)
+                                     .reduce((current, mov) => current + mov);
+    let balanceInterest = movements.filter(mov => mov > 0)
+                                   .map(mov => (mov * 1.2) / 100)
+                                   .reduce((current, mov) => current + mov);
     labelSumIn.textContent = `${balanceDeposit}€`;
-    labelSumOut.textContent = `${balanceWithdrawal}€`;
+    labelSumOut.textContent = `${Math.abs(balanceWithdrawal)}€`;
+    labelSumInterest.textContent = `${balanceInterest}€`;
 }
 
 filterMov(account1.movements)
