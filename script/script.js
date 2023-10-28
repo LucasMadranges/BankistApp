@@ -57,6 +57,19 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Fonction pour créer un username à chaque objet en fonction de leurs noms
+function createUsername(user) {
+    user.forEach((account) => {
+        account.username = account.owner.toLowerCase()
+                                  .split(' ')
+                                  .map(name => name[0])
+                                  .join('');
+    })
+}
+
+createUsername(accounts);
+
+// Fonction pour afficher les dépôt et retrait
 function displayMovements(movements) {
     containerMovements.innerHTML = '';
 
@@ -74,21 +87,7 @@ function displayMovements(movements) {
     })
 }
 
-displayMovements(account1.movements);
-
-// Fonction pour créer un username à chaque objet en fonction de leurs noms
-function createUsername(user) {
-    user.forEach((account) => {
-        account.username = account.owner.toLowerCase()
-                                  .split(' ')
-                                  .map(name => name[0])
-                                  .join('');
-    })
-}
-
-createUsername(accounts);
-
-// Fonction pour calculer la balance de dépôt et la balance de retrait
+// Fonction pour calculer la balance de dépôt, la balance de retrait et la balance d'intérêt
 function filterMov(movements) {
     let balanceDeposit = movements.filter(mov => mov > 0)
                                   .reduce((current, mov) => current + mov);
@@ -102,11 +101,33 @@ function filterMov(movements) {
     labelSumInterest.textContent = `${balanceInterest}€`;
 }
 
-filterMov(account1.movements)
-
 // Fonction pour calculer la balance totale du compte
 function accountBalance(mov) {
-    return mov.reduce((acc, cur) => acc + cur)
+    let balance = mov.reduce((acc, cur) => acc + cur)
+    labelBalance.textContent = `${balance}€`;
 }
 
-labelBalance.textContent = `${accountBalance(account1.movements)}€`;
+// Connexion
+let currentAccount;
+btnLogin.addEventListener("click", (event) => {
+    // Désactive le rechargement de la page de la balise form
+    event.preventDefault();
+
+    currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
+
+    // Si currentAccount existe et son pin et égale à celui de l'input PIN
+    if (currentAccount?.pin === Number(inputLoginPin.value)) {
+        // Affiche l'UI et affiche un message de bienvenu
+        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+        containerApp.style.opacity = '1';
+
+        // Affichent les dépôt et retrait
+        displayMovements(currentAccount.movements);
+
+        // Affiche les balances
+        filterMov(currentAccount.movements);
+
+        // Affiche le sommaire
+        accountBalance(currentAccount.movements);
+    }
+})
