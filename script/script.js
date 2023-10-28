@@ -90,20 +90,22 @@ function displayMovements(movements) {
 // Fonction pour calculer la balance de dépôt, la balance de retrait et la balance d'intérêt
 function filterMov(movements) {
     let balanceDeposit = movements.filter(mov => mov > 0)
-                                  .reduce((current, mov) => current + mov);
+                                  .reduce((current, mov) => current + mov, 0);
+
     let balanceWithdrawal = movements.filter(mov => mov < 0)
-                                     .reduce((current, mov) => current + mov);
+                                     .reduce((current, mov) => current + mov, 0);
+
     let balanceInterest = movements.filter(mov => mov > 0)
                                    .map(mov => (mov * 1.2) / 100)
-                                   .reduce((current, mov) => current + mov);
+                                   .reduce((current, mov) => current + mov, 0);
     labelSumIn.textContent = `${balanceDeposit}€`;
     labelSumOut.textContent = `${Math.abs(balanceWithdrawal)}€`;
-    labelSumInterest.textContent = `${balanceInterest}€`;
+    labelSumInterest.textContent = `${Math.trunc(balanceInterest)}€`;
 }
 
 // Fonction pour calculer la balance totale du compte
-function accountBalance(mov) {
-    let balance = mov.reduce((acc, cur) => acc + cur)
+function accountBalance(movements) {
+    let balance = movements.reduce((acc, cur) => acc + cur)
     labelBalance.textContent = `${balance}€`;
 }
 
