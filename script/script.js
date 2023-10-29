@@ -88,16 +88,16 @@ function displayMovements(movements) {
 }
 
 // Fonction pour calculer la balance de dépôt, la balance de retrait et la balance d'intérêt
-function filterMov(movements) {
-    let balanceDeposit = movements.filter(mov => mov > 0)
-                                  .reduce((current, mov) => current + mov, 0);
+function filterMov(account) {
+    let balanceDeposit = account.movements.filter(mov => mov > 0)
+                                .reduce((current, mov) => current + mov, 0);
 
-    let balanceWithdrawal = movements.filter(mov => mov < 0)
-                                     .reduce((current, mov) => current + mov, 0);
-
-    let balanceInterest = movements.filter(mov => mov > 0)
-                                   .map(mov => (mov * 1.2) / 100)
+    let balanceWithdrawal = account.movements.filter(mov => mov < 0)
                                    .reduce((current, mov) => current + mov, 0);
+
+    let balanceInterest = account.movements.filter(mov => mov > 0)
+                                 .map(mov => (mov * account.interestRate) / 100)
+                                 .reduce((current, mov) => current + mov, 0);
     labelSumIn.textContent = `${balanceDeposit}€`;
     labelSumOut.textContent = `${Math.abs(balanceWithdrawal)}€`;
     labelSumInterest.textContent = `${Math.trunc(balanceInterest)}€`;
@@ -123,13 +123,24 @@ btnLogin.addEventListener("click", (event) => {
         labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
         containerApp.style.opacity = '1';
 
+        // Vident les inputs de login
+        inputLoginUsername.value = inputLoginPin.value = '';
+        inputLoginPin.blur(); // Permet de retirer le focus sur l'élément
+
         // Affichent les dépôt et retrait
         displayMovements(currentAccount.movements);
 
         // Affiche les balances
-        filterMov(currentAccount.movements);
+        filterMov(currentAccount);
 
         // Affiche le sommaire
         accountBalance(currentAccount.movements);
     }
+})
+
+btnTransfer.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const amount = Number(inputTransferAmount.value);
+    const receiverAccount = accounts.find(account => account.username === inputTransferTo.value);
 })
