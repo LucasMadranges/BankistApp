@@ -57,7 +57,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-// Fonction pour créer un username à chaque objet en fonction de leurs noms
+// Function for create username for each object
 function createUsername(user) {
     user.forEach((account) => {
         account.username = account.owner.toLowerCase()
@@ -69,7 +69,7 @@ function createUsername(user) {
 
 createUsername(accounts);
 
-// Fonction pour afficher les dépôt et retrait
+// Function for display movements
 function displayMovements(movements, sort = false) {
     containerMovements.innerHTML = '';
 
@@ -90,7 +90,7 @@ function displayMovements(movements, sort = false) {
     })
 }
 
-// Fonction pour calculer la balance de dépôt, la balance de retrait et la balance d'intérêt
+// Function for calculate the deposit, withdrawal and interest
 function filterMov(account) {
     let balanceDeposit = account.movements.filter(mov => mov > 0)
                                 .reduce((current, mov) => current + mov, 0);
@@ -106,13 +106,13 @@ function filterMov(account) {
     labelSumInterest.textContent = `${Math.trunc(balanceInterest)}€`;
 }
 
-// Fonction pour calculer la balance totale du compte
+// Function for calculate the total of the current account
 function accountBalance(account) {
     account.balance = account.movements.reduce((acc, cur) => acc + cur)
     labelBalance.textContent = `${account.balance}€`;
 }
 
-// Appel des 3 fonctions
+// Call 3 functions
 function updateUI(account) {
     // Affichent les dépôt et retrait
     displayMovements(account.movements);
