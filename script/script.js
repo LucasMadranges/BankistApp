@@ -206,4 +206,4 @@ btnSort.addEventListener("click", (event) => {
     event.preventDefault();
     displayMovements(currentAccount.movements, !sorted);
     sorted = !sorted;
-})  
+})
