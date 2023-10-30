@@ -121,7 +121,7 @@ function updateUI(account) {
     accountBalance(account);
 }
 
-// Connexion
+// Event click for connexion
 let currentAccount;
 btnLogin.addEventListener("click", (event) => {
     // Prevent default for form
@@ -143,6 +143,7 @@ btnLogin.addEventListener("click", (event) => {
     }
 })
 
+// Event click for transfer money
 btnTransfer.addEventListener("click", (event) => {
     event.preventDefault();
 
@@ -160,4 +161,21 @@ btnTransfer.addEventListener("click", (event) => {
 
         inputTransferAmount.blur(); // Permet de retirer le focus sur l'élément
     }
+})
+
+// Event click for close account
+btnClose.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+        const index = accounts.findIndex(account => account.username === currentAccount.username);
+
+        // Delete account
+        accounts.splice(index, 1);
+
+        // Hide UI
+        containerApp.style.opacity = '0';
+    }
+    inputCloseUsername.value = inputClosePin.value = '';
+    inputClosePin.blur(); // Permet de retirer le focus sur l'élément
 })
