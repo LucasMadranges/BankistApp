@@ -26,13 +26,17 @@
                  src="img/logos/logo.png"/>
             <form class="login">
                 <input class="login__input login__input--user"
+                       id="input-user-login"
                        placeholder="user"
                        type="text"/>
+                <label for="input-user-login"></label>
                 <!-- In practice, use type="password" -->
                 <input class="login__input login__input--pin"
+                       id="input-pin-login"
                        maxlength="4"
                        placeholder="PIN"
                        type="password"/>
+                <label for="input-pin-login"></label>
                 <button class="login__btn">&rarr;</button>
             </form>
         </nav>
@@ -79,12 +83,16 @@
                 <h2>Transfer money</h2>
                 <form class="form form--transfer">
                     <input class="form__input form__input--to"
+                           id="input-user-transfer"
                            type="text"/>
                     <input class="form__input form__input--amount"
+                           id="input-pin-tranfer"
                            type="number"/>
                     <button class="form__btn form__btn--transfer">&rarr;</button>
-                    <label class="form__label">Transfer to</label>
-                    <label class="form__label">Amount</label>
+                    <label class="form__label"
+                           for="input-user-transfer">Transfer to</label>
+                    <label class="form__label"
+                           for="input-pin-tranfer">Amount</label>
                 </form>
             </div>
 
@@ -93,9 +101,11 @@
                 <h2>Request loan</h2>
                 <form class="form form--loan">
                     <input class="form__input form__input--loan-amount"
+                           id="input-loan"
                            type="number"/>
                     <button class="form__btn form__btn--loan">&rarr;</button>
-                    <label class="form__label form__label--loan">Amount</label>
+                    <label class="form__label form__label--loan"
+                           for="input-loan">Amount</label>
                 </form>
             </div>
 
@@ -104,13 +114,17 @@
                 <h2>Close account</h2>
                 <form class="form form--close">
                     <input class="form__input form__input--user"
+                           id="input-user-close"
                            type="text"/>
                     <input class="form__input form__input--pin"
+                           id="input-pin-close"
                            maxlength="6"
                            type="password"/>
                     <button class="form__btn form__btn--close">&rarr;</button>
-                    <label class="form__label">Confirm user</label>
-                    <label class="form__label">Confirm PIN</label>
+                    <label class="form__label"
+                           for="input-user-close">Confirm user</label>
+                    <label class="form__label"
+                           for="input-pin-close">Confirm PIN</label>
                 </form>
             </div>
 
