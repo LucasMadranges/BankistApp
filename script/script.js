@@ -104,37 +104,42 @@ function filterMov(account) {
 }
 
 // Fonction pour calculer la balance totale du compte
-function accountBalance(movements) {
-    let balance = movements.reduce((acc, cur) => acc + cur)
-    labelBalance.textContent = `${balance}€`;
+function accountBalance(account) {
+    account.balance = account.movements.reduce((acc, cur) => acc + cur)
+    labelBalance.textContent = `${account.balance}€`;
+}
+
+// Appel des 3 fonctions
+function updateUI(account) {
+    // Affichent les dépôt et retrait
+    displayMovements(account.movements);
+
+    // Affiche les balances
+    filterMov(account);
+
+    // Affiche le sommaire
+    accountBalance(account);
 }
 
 // Connexion
 let currentAccount;
 btnLogin.addEventListener("click", (event) => {
-    // Désactive le rechargement de la page de la balise form
+    // Prevent default for form
     event.preventDefault();
 
     currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
 
-    // Si currentAccount existe et son pin et égale à celui de l'input PIN
     if (currentAccount?.pin === Number(inputLoginPin.value)) {
-        // Affiche l'UI et affiche un message de bienvenu
+        // Update UI and message
         labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
         containerApp.style.opacity = '1';
 
-        // Vident les inputs de login
+        // Delete input login
         inputLoginUsername.value = inputLoginPin.value = '';
         inputLoginPin.blur(); // Permet de retirer le focus sur l'élément
 
-        // Affichent les dépôt et retrait
-        displayMovements(currentAccount.movements);
-
-        // Affiche les balances
-        filterMov(currentAccount);
-
-        // Affiche le sommaire
-        accountBalance(currentAccount.movements);
+        // Update UI
+        updateUI(currentAccount);
     }
 })
 
@@ -143,4 +148,16 @@ btnTransfer.addEventListener("click", (event) => {
 
     const amount = Number(inputTransferAmount.value);
     const receiverAccount = accounts.find(account => account.username === inputTransferTo.value);
+    inputTransferAmount.value = inputTransferTo.value = '';
+
+    if (amount > 0 && currentAccount.balance >= amount && receiverAccount && receiverAccount?.username !== currentAccount.username) {
+        // Transfer
+        currentAccount.movements.push(-amount);
+        receiverAccount.movements.push(amount);
+
+        // Update UI
+        updateUI(currentAccount);
+
+        inputTransferAmount.blur(); // Permet de retirer le focus sur l'élément
+    }
 })
