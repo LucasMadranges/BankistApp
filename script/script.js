@@ -70,10 +70,13 @@ function createUsername(user) {
 createUsername(accounts);
 
 // Fonction pour afficher les dépôt et retrait
-function displayMovements(movements) {
+function displayMovements(movements, sort = false) {
     containerMovements.innerHTML = '';
 
-    movements.forEach((mov, i) => {
+    const moves = sort ? movements.slice()
+                                  .sort((a, b) => a - b) : movements;
+
+    moves.forEach((mov, i) => {
         const type = mov > 0 ? 'deposit' : 'withdrawal';
 
         const html = document.createElement(`div`);
@@ -195,4 +198,12 @@ btnClose.addEventListener("click", (event) => {
     }
     inputCloseUsername.value = inputClosePin.value = '';
     inputClosePin.blur(); // Permet de retirer le focus sur l'élément
+})
+
+// Event click for sorting movements
+let sorted = false;
+btnSort.addEventListener("click", (event) => {
+    event.preventDefault();
+    displayMovements(currentAccount.movements, !sorted);
+    sorted = !sorted;
 })
