@@ -70,11 +70,24 @@ function createUsername(user) {
 createUsername(accounts);
 
 // Function for display movements
-function displayMovements(movements, sort = false) {
+function displayMovements(movements, sort = 0) {
     containerMovements.innerHTML = '';
 
-    const moves = sort ? movements.slice()
-                                  .sort((a, b) => a - b) : movements;
+    let moves;
+
+    switch (sort) {
+        case 0:
+            moves = movements;
+            break;
+        case 1:
+            moves = movements.slice()
+                             .sort((a, b) => a - b);
+            break;
+        case 2:
+            moves = movements.slice()
+                             .sort((a, b) => b - a);
+            break;
+    }
 
     moves.forEach((mov, i) => {
         const type = mov > 0 ? 'deposit' : 'withdrawal';
@@ -201,9 +214,24 @@ btnClose.addEventListener("click", (event) => {
 })
 
 // Event click for sorting movements
-let sorted = false;
+let sorted = 0;
+btnSort.textContent = `⬅️ SORT`;
+
 btnSort.addEventListener("click", (event) => {
     event.preventDefault();
-    displayMovements(currentAccount.movements, !sorted);
-    sorted = !sorted;
+    sorted++;
+    sorted === 3 ? sorted = 0 : undefined;
+
+    switch (sorted) {
+        case 0:
+            btnSort.textContent = `⬅️ SORT`;
+            break;
+        case 1:
+            btnSort.textContent = `⬆️ SORT`;
+            break;
+        case 2:
+            btnSort.textContent = `⬇️ SORT`;
+            break;
+    }
+    displayMovements(currentAccount.movements, sorted);
 })
