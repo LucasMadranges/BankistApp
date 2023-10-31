@@ -1,0 +1,21 @@
+@media (max-width: 900px) {
+    .operation {
+        padding: 1.5rem 2.5rem;
+    }
+}
+
+@media (max-width: 700px) {
+    .app {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: repeat(2, auto);
+    }
+
+    /* MOVEMENTS */
+    .movements {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+        background-color: #fff;
+        border-radius: 1rem;
+        overflow: scroll;
+    }
+}

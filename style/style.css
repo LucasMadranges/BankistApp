@@ -70,7 +70,7 @@ nav {
     margin: 4rem auto;
     display: grid;
     grid-template-columns: 4fr 3fr;
-    grid-template-rows: auto repeat(3, 15rem) auto;
+    grid-template-rows: auto repeat(2, auto);
     gap: 2rem;
 
     /* NOTE This creates the fade in/out anumation */
@@ -83,7 +83,7 @@ nav {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 .balance__label {
@@ -104,7 +104,8 @@ nav {
 
 /* MOVEMENTS */
 .movements {
-    grid-row: 2 / span 3;
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
     background-color: #fff;
     border-radius: 1rem;
     overflow: scroll;
@@ -149,11 +150,16 @@ nav {
 
 /* SUMMARY */
 .summary {
-    grid-row: 5 / 6;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     padding: 0 0.3rem;
-    margin-top: 1rem;
+    margin: 1rem 0;
+    justify-content: space-between;
+}
+
+.summery-container {
+    display: flex;
+    align-items: center;
 }
 
 .summary__label {
@@ -178,7 +184,6 @@ nav {
 }
 
 .btn--sort {
-    margin-left: auto;
     border: none;
     background: none;
     font-size: 1.3rem;
@@ -191,6 +196,11 @@ nav {
     border-radius: 1rem;
     padding: 3rem 4rem;
     color: #333;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .operation--transfer {
@@ -269,7 +279,6 @@ h2 {
 
 .logout-timer {
     padding: 0 0.3rem;
-    margin-top: 1.9rem;
     text-align: right;
     font-size: 1.25rem;
 }

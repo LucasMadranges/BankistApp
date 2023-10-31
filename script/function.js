@@ -10,7 +10,7 @@ function createUsername(user) {
     })
 }
 
-// Function for display movements
+// Function for display movements   
 function displayMovements(movements) {
     containerMovements.innerHTML = '';
 
