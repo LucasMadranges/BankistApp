@@ -5,6 +5,11 @@
 }
 
 @media (max-width: 700px) {
+    nav {
+        flex-direction: column;
+        gap: 4rem;
+    }
+
     .app {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: repeat(2, auto);
@@ -17,5 +22,30 @@
         background-color: #fff;
         border-radius: 1rem;
         overflow: scroll;
+    }
+
+    .operation {
+        grid-column: 1 / -1;
+    }
+
+    .summery-container {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .summary-2 {
+        align-items: end;
+    }
+
+    .balance {
+        margin: 2rem;
+    }
+
+    .balance__value {
+        font-size: 3.5rem;
+    }
+
+    .balance__label {
+        font-size: 1.8rem;
     }
 }

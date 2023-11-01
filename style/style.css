@@ -11,6 +11,11 @@ nav {
     padding: 0 2.4rem;
 }
 
+.nav-logo {
+    display: flex;
+    justify-content: space-between;
+}
+
 .welcome {
     font-size: 1.9rem;
     font-weight: 500;
@@ -83,7 +88,7 @@ nav {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin: 2rem 0;
+    margin: 2rem 6rem;
 }
 
 .balance__label {
@@ -160,6 +165,10 @@ nav {
 .summery-container {
     display: flex;
     align-items: center;
+}
+
+.summary-2 {
+    gap: 3rem;
 }
 
 .summary__label {
