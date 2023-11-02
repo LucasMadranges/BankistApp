@@ -114,6 +114,7 @@ nav {
     background-color: #fff;
     border-radius: 1rem;
     overflow: scroll;
+    max-height: 500px;
 }
 
 .movements__row {
