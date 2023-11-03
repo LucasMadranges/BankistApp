@@ -100,9 +100,19 @@ function calcDateMovement(date) {
     if (daysPassed === 1) return 'Yesterday';
     if (daysPassed <= 7) return `${daysPassed} days ago`;
     else {
+        /*
         const day = `${date.getDate()}`.padStart(2, '0');
         const month = `${date.getMonth() + 1}`.padStart(2, '0');
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
+         */
+
+        const options = {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+        }
+
+        return new Intl.DateTimeFormat(currentAccount.locale, options).format(date);
     }
 }
