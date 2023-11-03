@@ -52,8 +52,9 @@ function filterMov(account) {
 
 // Function for calculate the total of the current account
 function accountBalance(account) {
-    account.balance = account.movements.reduce((acc, cur) => acc + cur)
-    labelBalance.textContent = `${account.balance.toFixed(2)}€`;
+    account.balance = account.movements.reduce((acc, cur) => acc + cur);
+    const formattedBalance = formattedMovements(account.balance, account);
+    labelBalance.textContent = `${formattedBalance}`;
 }
 
 // Call 3 functions
@@ -96,7 +97,6 @@ function switchMoves(account) {
 // Date of the movement 
 function calcDateMovement(date, locale) {
     const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
-
     const daysPassed = calcDaysPassed(new Date(), date)
 
     if (daysPassed === 0) return 'Today';
@@ -115,9 +115,9 @@ function calcDateMovement(date, locale) {
 }
 
 // Function for formatted the movements
-function formattedMovements(movements, account) {
+function formattedMovements(value, account) {
     return new Intl.NumberFormat(account.locale, {
         style: 'currency',
-        currency: currentAccount.currency,
-    }).format(movements);
+        currency: account.currency,
+    }).format(value);
 }
