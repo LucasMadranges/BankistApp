@@ -45,9 +45,9 @@ function filterMov(account) {
     let balanceInterest = account.movements.filter(mov => mov > 0)
         .map(mov => (mov * account.interestRate) / 100)
         .reduce((current, mov) => current + mov, 0);
-    labelSumIn.textContent = `${balanceDeposit.toFixed(2)}€`;
-    labelSumOut.textContent = `${Math.abs(balanceWithdrawal.toFixed(2))}€`;
-    labelSumInterest.textContent = `${Math.trunc(balanceInterest.toFixed(2))}€`;
+    labelSumIn.textContent = `${formattedMovements(balanceDeposit, account)}`;
+    labelSumOut.textContent = `${formattedMovements(balanceWithdrawal, account)}`;
+    labelSumInterest.textContent = `${formattedMovements(balanceInterest, account)}`;
 }
 
 // Function for calculate the total of the current account
