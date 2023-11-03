@@ -82,5 +82,5 @@ btnSort.textContent = `⬅️ SORT`;
 
 btnSort.addEventListener("click", (event) => {
     event.preventDefault();
-    switchMoves(currentAccount.movements);
+    switchMoves(currentAccount);
 })

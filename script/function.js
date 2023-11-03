@@ -11,17 +11,22 @@ function createUsername(user) {
 }
 
 // Function for display movements
-function displayMovements(movements) {
+function displayMovements(account, movements) {
     containerMovements.innerHTML = '';
 
     movements.forEach((mov, i) => {
         const type = mov > 0 ? 'deposit' : 'withdrawal';
 
+        const date = new Date(account.movementsDates[i]);
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const year = date.getFullYear();
+
         const html = document.createElement(`div`);
         html.innerHTML = '' +
             `<div class="movements__row" ${i % 2 === 0 ? `style="background-color: #f0f0f0"` : `style="background-color: #fff"`}>
                 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-                 <div class="movements__date">24/01/2037</div>
+                 <div class="movements__date">${day}/${month}/${year}</div>
                 <div class="movements__value">${mov.toFixed((2))}€</div>
             </div>`;
         containerMovements.insertAdjacentElement('afterbegin', html);
@@ -53,7 +58,7 @@ function accountBalance(account) {
 // Call 3 functions
 function updateUI(account) {
     // Affichent les dépôt et retrait
-    displayMovements(account.movements);
+    displayMovements(account, account.movements);
 
     // Affiche les balances
     filterMov(account);
@@ -62,27 +67,27 @@ function updateUI(account) {
     accountBalance(account);
 }
 
-function switchMoves(movements) {
+function switchMoves(account) {
     let moves;
     sorted++;
     sorted === 3 ? sorted = 0 : undefined;
 
     switch (sorted) {
         case 0:
-            moves = movements;
+            moves = account.movements;
             btnSort.textContent = `⬅️ SORT`;
             break;
         case 1:
-            moves = movements.slice()
+            moves = account.movements.slice()
                 .sort((a, b) => a - b);
             btnSort.textContent = `⬆️ SORT`;
             break;
         case 2:
-            moves = movements.slice()
+            moves = account.movements.slice()
                 .sort((a, b) => b - a);
             btnSort.textContent = `⬇️ SORT`;
             break;
     }
 
-    displayMovements(moves, sorted);
+    displayMovements(account, moves, sorted);
 }
