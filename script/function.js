@@ -1,6 +1,6 @@
 'use strict';
 
-// Function for create username for each object
+// Create username for each object
 function createUsername(user) {
     user.forEach((account) => {
         account.username = account.owner.toLowerCase()
@@ -10,7 +10,7 @@ function createUsername(user) {
     })
 }
 
-// Function for display movements
+// Display movements
 function displayMovements(account, movements) {
     containerMovements.innerHTML = '';
 
@@ -34,7 +34,7 @@ function displayMovements(account, movements) {
     })
 }
 
-// Function for calculate the deposit, withdrawal and interest
+// Calculate the deposit, withdrawal and interest
 function filterMov(account) {
     let balanceDeposit = account.movements.filter(mov => mov > 0)
         .reduce((current, mov) => current + mov, 0);
@@ -50,7 +50,7 @@ function filterMov(account) {
     labelSumInterest.textContent = `${formattedMovements(balanceInterest, account)}`;
 }
 
-// Function for calculate the total of the current account
+// Calculate the total of the current account
 function accountBalance(account) {
     account.balance = account.movements.reduce((acc, cur) => acc + cur);
     const formattedBalance = formattedMovements(account.balance, account);
@@ -70,7 +70,6 @@ function updateUI(account) {
 }
 
 // Sorting function
-
 function switchMoves(account) {
     let moves;
     sorted++;
@@ -125,19 +124,15 @@ function formattedMovements(value, account) {
 }
 
 // Start log out timer
-
 function startLogOutTimer() {
     // Set time to 5 minutes
-    let time = 10;
-    // Call the timer every second
-    const timer = setInterval(() => {
+    let time = 300;
+
+    function tick() {
         const min = `${Math.trunc(time / 60)}`.padStart(2, '0');
         const sec = `${time % 60}`.padStart(2, '0');
         // In each call, print the remaining time to UI
         labelTimer.textContent = `${min}:${sec}`;
-
-        // Decrease 1 second 
-        time--;
 
         // When 0 seconds, stop the timer and log out the user
         if (time === 0) {
@@ -146,7 +141,20 @@ function startLogOutTimer() {
             labelWelcome.textContent = `Log in to get started`;
             containerApp.style.opacity = '0';
         }
-    }, 1000)
 
+        // Decrease 1 second 
+        time--;
+    }
 
+    tick();
+    // Call the timer every second
+    const timer = setInterval(() => tick(), 1000)
+    return timer;
+}
+
+// Reset timer
+function resetTimer() {
+    // Timer log out
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
 }

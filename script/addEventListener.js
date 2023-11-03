@@ -1,7 +1,7 @@
 'use strict';
 
+let currentAccount, timer;
 // Event click for connexion
-let currentAccount;
 btnLogin.addEventListener("click", (event) => {
     // Prevent default for form
     event.preventDefault();
@@ -27,8 +27,8 @@ btnLogin.addEventListener("click", (event) => {
             year: 'numeric',
             //weekday: 'short'
         }
-        // const locale = navigator.language;
 
+        // const locale = navigator.language;
         labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).format(currentDate);
 
         /*
@@ -40,7 +40,8 @@ btnLogin.addEventListener("click", (event) => {
         labelDate.textContent = `${currentDay}/${currentMonth}/${currentYear}, ${currentHours}:${currentMinutes}`;
         */
 
-        startLogOutTimer();
+        // Reset Timer
+        resetTimer();
 
         // Update UI
         updateUI(currentAccount);
@@ -68,6 +69,9 @@ btnTransfer.addEventListener("click", (event) => {
         updateUI(currentAccount);
 
         inputTransferAmount.blur(); // Permet de retirer le focus sur l'élément
+
+        // Reset Timer
+        resetTimer();
     }
 })
 
@@ -91,6 +95,9 @@ btnLoan.addEventListener("click", (event) => {
     }
     inputLoanAmount.value = '';
     inputLoanAmount.blur(); // Permet de retirer le focus sur l'élément
+
+    // Reset Timer
+    resetTimer();
 })
 
 // Event click for close account
