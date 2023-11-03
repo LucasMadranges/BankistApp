@@ -77,13 +77,15 @@ btnLoan.addEventListener("click", (event) => {
 
     if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
         // Add movement
-        currentAccount.movements.push(amount);
+        setTimeout(() => {
+            currentAccount.movements.push(amount);
 
-        // Adding new date
-        currentAccount.movementsDates.push(new Date().toISOString());
+            // Adding new date
+            currentAccount.movementsDates.push(new Date().toISOString());
 
-        // Update UI
-        updateUI(currentAccount);
+            // Update UI
+            updateUI(currentAccount);
+        }, 3000);
     }
     inputLoanAmount.value = '';
     inputLoanAmount.blur(); // Permet de retirer le focus sur l'élément
