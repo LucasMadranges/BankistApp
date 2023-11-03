@@ -18,14 +18,17 @@ function displayMovements(account, movements) {
         const type = mov > 0 ? 'deposit' : 'withdrawal';
 
         const date = new Date(account.movementsDates[i]);
-        const movementDate = calcDateMovement(date);
+        const movementDate = calcDateMovement(date, account.locale);
+
+        // Formatted the movements
+        const formattedMov = formattedMovements(mov, account);
 
         const html = document.createElement(`div`);
         html.innerHTML = '' +
             `<div class="movements__row" ${i % 2 === 0 ? `style="background-color: #f0f0f0"` : `style="background-color: #fff"`}>
                 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
                  <div class="movements__date">${movementDate}</div>
-                <div class="movements__value">${mov.toFixed((2))}€</div>
+                <div class="movements__value">${formattedMov}</div>
             </div>`;
         containerMovements.insertAdjacentElement('afterbegin', html);
     })
@@ -91,7 +94,7 @@ function switchMoves(account) {
 }
 
 // Date of the movement 
-function calcDateMovement(date) {
+function calcDateMovement(date, locale) {
     const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
     const daysPassed = calcDaysPassed(new Date(), date)
@@ -107,12 +110,14 @@ function calcDateMovement(date) {
         return `${day}/${month}/${year}`;
          */
 
-        const options = {
-            day: 'numeric',
-            month: 'numeric',
-            year: 'numeric',
-        }
-
-        return new Intl.DateTimeFormat(currentAccount.locale, options).format(date);
+        return new Intl.DateTimeFormat(locale).format(date);
     }
+}
+
+// Function for formatted the movements
+function formattedMovements(movements, account) {
+    return new Intl.NumberFormat(account.locale, {
+        style: 'currency',
+        currency: currentAccount.currency,
+    }).format(movements);
 }
