@@ -68,6 +68,11 @@ nav {
     color: #777;
 }
 
+.main {
+    transition: all 1s;
+    opacity: 0;
+}
+
 /* MAIN */
 .app {
     position: relative;
@@ -79,7 +84,6 @@ nav {
     gap: 2rem;
 
     /* NOTE This creates the fade in/out anumation */
-    opacity: 0;
     transition: all 1s;
 }
 

@@ -40,6 +40,8 @@ btnLogin.addEventListener("click", (event) => {
         labelDate.textContent = `${currentDay}/${currentMonth}/${currentYear}, ${currentHours}:${currentMinutes}`;
         */
 
+        startLogOutTimer();
+
         // Update UI
         updateUI(currentAccount);
     }
