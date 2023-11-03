@@ -18,15 +18,13 @@ function displayMovements(account, movements) {
         const type = mov > 0 ? 'deposit' : 'withdrawal';
 
         const date = new Date(account.movementsDates[i]);
-        const day = `${date.getDate()}`.padStart(2, '0');
-        const month = `${date.getMonth() + 1}`.padStart(2, '0');
-        const year = date.getFullYear();
+        const movementDate = calcDateMovement(date);
 
         const html = document.createElement(`div`);
         html.innerHTML = '' +
             `<div class="movements__row" ${i % 2 === 0 ? `style="background-color: #f0f0f0"` : `style="background-color: #fff"`}>
                 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-                 <div class="movements__date">${day}/${month}/${year}</div>
+                 <div class="movements__date">${movementDate}</div>
                 <div class="movements__value">${mov.toFixed((2))}€</div>
             </div>`;
         containerMovements.insertAdjacentElement('afterbegin', html);
@@ -90,4 +88,21 @@ function switchMoves(account) {
     }
 
     displayMovements(account, moves, sorted);
+}
+
+// Date of the movement 
+function calcDateMovement(date) {
+    const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+    const daysPassed = calcDaysPassed(new Date(), date)
+
+    if (daysPassed === 0) return 'Today';
+    if (daysPassed === 1) return 'Yesterday';
+    if (daysPassed <= 7) return `${daysPassed} days ago`;
+    else {
+        const day = `${date.getDate()}`.padStart(2, '0');
+        const month = `${date.getMonth() + 1}`.padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
 }
