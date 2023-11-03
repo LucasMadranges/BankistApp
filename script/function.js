@@ -21,6 +21,7 @@ function displayMovements(movements) {
         html.innerHTML = '' +
             `<div class="movements__row" ${i % 2 === 0 ? `style="background-color: #f0f0f0"` : `style="background-color: #fff"`}>
                 <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+                 <div class="movements__date">24/01/2037</div>
                 <div class="movements__value">${mov.toFixed((2))}€</div>
             </div>`;
         containerMovements.insertAdjacentElement('afterbegin', html);
