@@ -46,7 +46,7 @@ function filterMov(account) {
         .map(mov => (mov * account.interestRate) / 100)
         .reduce((current, mov) => current + mov, 0);
     labelSumIn.textContent = `${formattedMovements(balanceDeposit, account)}`;
-    labelSumOut.textContent = `${formattedMovements(balanceWithdrawal, account)}`;
+    labelSumOut.textContent = `${formattedMovements(Math.abs(balanceWithdrawal), account)}`;
     labelSumInterest.textContent = `${formattedMovements(balanceInterest, account)}`;
 }
 
