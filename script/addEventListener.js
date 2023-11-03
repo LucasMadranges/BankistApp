@@ -35,6 +35,10 @@ btnTransfer.addEventListener("click", (event) => {
         currentAccount.movements.push(-amount);
         receiverAccount.movements.push(amount);
 
+        // Adding new date
+        currentAccount.movementsDates.push(new Date().toISOString());
+        receiverAccount.movementsDates.push(new Date().toISOString());
+
         // Update UI
         updateUI(currentAccount);
 
@@ -51,6 +55,9 @@ btnLoan.addEventListener("click", (event) => {
     if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
         // Add movement
         currentAccount.movements.push(amount);
+
+        // Adding new date
+        currentAccount.movementsDates.push(new Date().toISOString());
 
         // Update UI
         updateUI(currentAccount);
