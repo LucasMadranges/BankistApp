@@ -71,3 +71,13 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 createUsername(accounts);
+
+// Create username for each object
+function createUsername(user) {
+    user.forEach((account) => {
+        account.username = account.owner.toLowerCase()
+            .split(' ')
+            .map(name => name[0])
+            .join('');
+    })
+}

@@ -1,15 +1,5 @@
 'use strict';
 
-// Create username for each object
-function createUsername(user) {
-    user.forEach((account) => {
-        account.username = account.owner.toLowerCase()
-            .split(' ')
-            .map(name => name[0])
-            .join('');
-    })
-}
-
 // Display movements
 function displayMovements(account, movements) {
     containerMovements.innerHTML = '';
